@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.kosa.dao.TodoDAO">
+
+    <insert id="todoInsert" parameterType="TodoVO">
+        <selectKey keyProperty="id" resultType="int" order="BEFORE">
+            select todo_seq.nextval id from dual
+        </selectKey>
+        insert into TODO (id, title, checked, delete_yn) values (#{id}, #{title}, #{checked}, 'N')
+    </insert>
+
+    <select id="todoList" resultType="TodoVO">
+        select
+            id,
+            title,
+            checked,
+            TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate
+        from TODO where delete_yn = 'N'
+        order by id asc
+    </select>
+
+    <update id="todoUpdate" parameterType="TodoVO">
+        update TODO set title = #{title}, checked = #{checked}, mod_date = sysdate where id = #{id}
+    </update>
+
+    <delete id="todoDelete">
+        update TODO set delete_date = sysdate, delete_yn = 'Y' where id = #{id}
+    </delete>
+</mapper>
