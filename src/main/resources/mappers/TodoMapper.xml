@@ -8,7 +8,7 @@
         <selectKey keyProperty="id" resultType="int" order="BEFORE">
             select todo_seq.nextval id from dual
         </selectKey>
-        insert into TODO (id, title, checked, delete_yn) values (#{id}, #{title}, #{checked}, 'N')
+        insert into TODO (id, title, checked, username) values (#{id}, #{title}, #{checked}, #{username})
     </insert>
 
     <select id="todoList" resultType="TodoVO">

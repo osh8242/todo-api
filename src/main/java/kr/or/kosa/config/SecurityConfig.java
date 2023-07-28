@@ -1,5 +1,8 @@
 package kr.or.kosa.config;
 
+import kr.or.kosa.config.jwt.JwtAuthenticationFilter;
+import kr.or.kosa.config.jwt.JwtAuthorizationFilter;
+import kr.or.kosa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,10 +14,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import kr.or.kosa.config.jwt.JwtAuthenticationFilter;
-import kr.or.kosa.config.jwt.JwtAuthorizationFilter;
-import kr.or.kosa.repository.UserRepository;
 
 // https://github.com/spring-projects/spring-security/issues/10822 참고
 @Configuration
@@ -56,7 +55,9 @@ public class SecurityConfig {
 			.requestMatchers("/api/v1/manager/**")
 			.hasAnyAuthority("ROLE_MANAGER","ROLE_ADMIN")
 			.requestMatchers("/api/v1/admin/**")
-			.hasAuthority("ROLE_ADMIN") //반드시 해당 권한만 허가  
+			.hasAuthority("ROLE_ADMIN") //반드시 해당 권한만 허가
+			.requestMatchers("/todo/**")
+			.hasAnyAuthority("ROLE_USER", "ROLE_MANAGER", "ROLE_ADMIN")
 			.anyRequest().permitAll()
 		);
 		
