@@ -9,4 +9,5 @@ public class TodoVO {
     private Character checked;
     private String regDate;
     private String modDate;
+    private String username;
 }

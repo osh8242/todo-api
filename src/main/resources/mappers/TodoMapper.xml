@@ -11,14 +11,13 @@
         insert into TODO (id, title, checked, username) values (#{id}, #{title}, #{checked}, #{username})
     </insert>
 
-    <select id="todoList" resultType="TodoVO">
+    <select id="todoList" parameterType="Users" resultType="TodoVO">
         select
             id,
             title,
             checked,
             TO_CHAR(reg_date, 'YYYY-MM-DD HH24:MI:SS') regDate
-        from TODO where delete_yn = 'N'
-        order by id asc
+        from TODO where delete_yn = 'N' and username = #{username}
     </select>
 
     <update id="todoUpdate" parameterType="TodoVO">

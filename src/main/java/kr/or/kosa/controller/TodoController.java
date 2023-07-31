@@ -1,5 +1,6 @@
 package kr.or.kosa.controller;
 
+import kr.or.kosa.model.Users;
 import kr.or.kosa.service.TodoService;
 import kr.or.kosa.model.TodoVO ;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,11 @@ public class TodoController {
     }
 
     @GetMapping("/todoList")
-    public ResponseEntity<List<TodoVO>> todoList(){
+    public ResponseEntity<List<TodoVO>> todoList(@RequestParam("username") String username){
         System.out.println("TestController.todoList");
-        List<TodoVO> todoList = todoService.todoList();
+        Users users = new Users();
+        users.setUsername(username);
+        List<TodoVO> todoList = todoService.todoList(users);
         return ResponseEntity.ok(todoList);
     }
 

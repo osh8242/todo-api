@@ -3,6 +3,7 @@ package kr.or.kosa.service;
 
 import kr.or.kosa.dao.TodoDAO;
 import kr.or.kosa.model.TodoVO;
+import kr.or.kosa.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,8 +36,8 @@ public class TodoService {
         }
     }
 
-    public List<TodoVO> todoList() {
-        return todoDAO.todoList();
+    public List<TodoVO> todoList(Users users) {
+        return todoDAO.todoList(users);
     }
 
     public int todoUpdate(TodoVO todoVO){
